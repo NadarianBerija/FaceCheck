@@ -68,7 +68,7 @@ def only_one(target_label):
     Функция обрабатывает изображение, проверяя, что на нем изображен ровно один человек, 
     дает определенные размеры изображению и отображает его на указанной метке (label).
 
-    Если на изображении больше одногл или вовсе нет людей, то он выдает ошибку.
+    Если на изображении больше одного или вовсе нет людей, то он выдает ошибку.
     """
     file_path = open_file()
     number_of_person = number_of_people(file_path)
@@ -93,7 +93,7 @@ def only_one(target_label):
 def compare_images(image1, image2):
     """
     Сравнивает фото и, взависимости от результата,
-    возвращает галочку или крестик.
+    возвращает галочку или крестик, а также процент соотношения.
     """
     if not getattr(image1, 'image_path', None) or not getattr(image2, 'image_path', None):
         error_label.configure(text="Загрузите оба изображения")
@@ -108,6 +108,8 @@ def compare_images(image1, image2):
         symbol_label.configure(image=symbol1, text="")
     else:
         symbol_label.configure(image=symbol2,text="")
+        
+    percentage_ratio.configure(text=f"{percentage:.2f}%")
 
 cp_frame = CTkFrame(app, corner_radius=30, fg_color="#212121")
 
@@ -115,31 +117,43 @@ symbol1 = CTkImage(Image.open("emblems/symbol1.png"), size=(50, 50))
 symbol2 = CTkImage(Image.open("emblems/symbol2.png"), size=(50, 50))
 
 left_frame = CTkFrame(cp_frame, corner_radius=30, fg_color='#2b2b2b')
-left_frame.grid(row=0, column=0, padx=15, pady=15)
-
-symbol_label = CTkLabel(cp_frame, image="", text="")
-symbol_label.grid(row=0, column=1, padx=15, pady=15)
+left_frame.grid(row=0, column=0)
 
 right_frame = CTkFrame(cp_frame, corner_radius=30, fg_color="#2b2b2b")
-right_frame.grid(row=0, column=2, padx=15, pady=15)
+right_frame.grid(row=0, column=2)
+
+result_frame=CTkFrame(cp_frame, fg_color="#212121")
+result_frame.grid(row=0,column=1)
+
+symbol_label = CTkLabel(result_frame, image="", text="")
+symbol_label.grid(row=0, column=0)
+
+percentage_ratio = CTkLabel(result_frame, text="", font=CTkFont(size=24, weight="bold")) 
+percentage_ratio.grid(row=1, column=0)
+
+error_label = CTkLabel(cp_frame, text="")
+error_label.grid(row=2, column=1)
+
+button_compare = CTkButton(cp_frame, text="Сравнить", command=lambda: compare_images(label_image_1, label_image_2), width=200, height=50, corner_radius=30, font=CTkFont(size=20, weight="bold"))
+button_compare.grid(row=3, column=1)
+
+text_image_1 = CTkLabel(left_frame, text="Первое изображение", font=CTkFont(size=24, weight="bold"))
+text_image_1.pack(expand = True, padx=20, pady=10)
 
 label_image_1 = CTkLabel(left_frame, text="")
 label_image_1.pack(expand=True,padx = 20, pady = 20)
 
-label_image_2 = CTkLabel(right_frame, text="")
-label_image_2.pack(expand=True,padx = 20, pady = 20)
-
 button_for_image1 = CTkButton(left_frame, text="Загрузить изображение...", command=lambda: only_one(label_image_1))
 button_for_image1.pack(expand=True, padx=20, pady=15)
 
+text_image_2 = CTkLabel(right_frame, text="Второе изображение", font=CTkFont(size=24, weight="bold"))
+text_image_2.pack(expand = True, padx=20, pady=10)
+
+label_image_2 = CTkLabel(right_frame, text="")
+label_image_2.pack(expand=True,padx = 20, pady = 20)
+
 button_for_image2 = CTkButton(right_frame, text="Загрузить изображение...", command=lambda: only_one(label_image_2))
 button_for_image2.pack(expand=True, padx=20, pady=15)
-
-error_label = CTkLabel(cp_frame, text="")
-error_label.grid(row=1, column=1, padx=5, pady=5)
-
-button_compare = CTkButton(cp_frame, text="Сравнить", command=lambda: compare_images(label_image_1, label_image_2), width=200, height=50, corner_radius=30, font=CTkFont(size=20, weight="bold"))
-button_compare.grid(row=2, column=1, padx=15, pady=15)
 #--------------------------------------------------------------
 
 
@@ -170,7 +184,7 @@ def the_face_recognizer():
 
 fp_frame = CTkFrame(app, corner_radius=30, fg_color='#2b2b2b')
 
-label_font = CTkFont(size=20, weight="bold")
+label_font = CTkFont(size=28, weight="bold")
 
 label = CTkLabel(fp_frame, text='', font=label_font)
 label.pack(expand=True,padx = 20, pady = 20)
@@ -194,7 +208,8 @@ def return_back():
     label_image_1.configure(image='', text='')
     label_image_2.configure(image='', text='')
     symbol_label.configure(image='', text='')
-    error_label.configure(text="")
+    error_label.configure(text='')
+    percentage_ratio.configure(text='')
 
     label.configure(image='' ,text='')
     main_frame.pack(expand=True)
