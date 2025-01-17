@@ -210,8 +210,11 @@ def return_back():
     symbol_label.configure(image='', text='')
     error_label.configure(text='')
     percentage_ratio.configure(text='')
-
     label.configure(image='' ,text='')
+
+    label_image_1.image_path = None
+    label_image_2.image_path = None
+    
     main_frame.pack(expand=True)
 
 return_button = CTkButton(app, text="Назад", command=return_back)
