@@ -62,7 +62,7 @@ def compare_images(image1, image2):
 
     image1_path = image1.image_path
     image2_path = image2.image_path
-    result = compare_people_in_images(image1_path, image2_path)
+    result, percentage = compare_people_in_images(image1_path, image2_path)
     if result[0]:
         symbol_label.configure(image=symbol1, text="")
     else:
