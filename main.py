@@ -57,6 +57,7 @@ def compare_images(image1, image2):
     if not getattr(image1, 'image_path', None) or not getattr(image2, 'image_path', None):
         error_label.configure(text="Загрузите оба изображения")
         symbol_label.configure(image="",text="")
+        percentage_ratio.configure(text="")
     else:
         error_label.configure(text="")
 
