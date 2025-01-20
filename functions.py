@@ -33,11 +33,11 @@ def only_one(target_label, info_lable):
     else:
         target_label.image_path = file_path
         image = Image.open(file_path)
-        desired_width = 600
+        desired_width = 450
         aspect_ratio = image.height / image.width
         desired_height = int(desired_width * aspect_ratio)
-        if desired_height > 620:
-            desired_height = 620
+        if desired_height > 500:
+            desired_height = 500
             aspect_ratio = image.width / image.height
             desired_width = int(desired_height * aspect_ratio)
             image = CTkImage(image, size=(desired_width, desired_height))
