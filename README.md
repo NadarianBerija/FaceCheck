@@ -8,6 +8,7 @@ Desktop-приложение:"Программа для распознавани
 - `main.py`: Главный файл для запуска.
 - `function.py`: файл с набором функций.
 - `emblems`: папка с эмблемами и лого.
+- <a href="https://drive.google.com/drive/folders/16qqswNHvUCGQI4iCekXdd6T_-ePKZrzz">Ссылка<a>: файлы для надежной работы функции `age_gender_detection()`.
 ### Пример использования:
 ![proekt](https://github.com/user-attachments/assets/c45ff3cc-58ca-43e8-947f-30276c40c241)
 ### Контакты:
