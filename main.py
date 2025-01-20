@@ -1,6 +1,5 @@
 from customtkinter import *
 from PIL import Image
-import tkinter.filedialog
 from functions import *
 
 app = CTk()
@@ -9,18 +8,6 @@ app.iconbitmap("emblems/logo.ico")
 app.geometry("1420x980")
 app.configure(fg_color="#212121")
 app.grid_columnconfigure(0, weight=1)
-
-def open_file():
-    """Открытие файла
-    
-    Эта функция открывает диалоговое окно для выбора файла
-    
-    Возвращает: 
-    Путь к выбранному файлу
-    """
-
-    file_path = tkinter.filedialog.askopenfilename(title="Выберите файл", filetypes=[("Изображения", "*.png;*.jpg;*.jpeg")])
-    return file_path
 
 def comparing_people():
     """Открывает окно "Сравнить личность
@@ -62,34 +49,6 @@ button2.grid(row=0, column=1, padx=15, pady=15)
 
 
 #-------------Страница (Сравнение людей)-----------------------
-def only_one(target_label):
-    """Обработка изображения на наличие только одного человака
-
-    Функция обрабатывает изображение, проверяя, что на нем изображен ровно один человек, 
-    дает определенные размеры изображению и отображает его на указанной метке (label).
-
-    Если на изображении больше одного или вовсе нет людей, то он выдает ошибку.
-    """
-    file_path = open_file()
-    number_of_person = number_of_people(file_path)
-    if number_of_person > 1 or number_of_person <= 0:
-        target_label.configure(image='', text="\nНа фото должен быть один человек")
-        target_label.image_path = None
-    else:
-        target_label.image_path = file_path
-        image = Image.open(file_path)
-        desired_width = 600
-        aspect_ratio = image.height / image.width
-        desired_height = int(desired_width * aspect_ratio)
-        if desired_height > 620:
-            desired_height = 620
-            aspect_ratio = image.width / image.height
-            desired_width = int(desired_height * aspect_ratio)
-            image = CTkImage(image, size=(desired_width, desired_height))
-        else:
-            image = CTkImage(image, size=(desired_width, desired_height))
-        target_label.configure(image=image, text="", compound="top")
-
 def compare_images(image1, image2):
     """
     Сравнивает фото и, взависимости от результата,
@@ -115,6 +74,9 @@ cp_frame = CTkFrame(app, corner_radius=30, fg_color="#212121")
 
 symbol1 = CTkImage(Image.open("emblems/symbol1.png"), size=(50, 50))
 symbol2 = CTkImage(Image.open("emblems/symbol2.png"), size=(50, 50))
+
+header_cp = CTkLabel(cp_frame, text="Сравнивание\nдвух личностей", font=CTkFont(size=32, weight="bold"))
+header_cp.grid(row=0,column=1, pady=50)
 
 left_frame = CTkFrame(cp_frame, corner_radius=30, fg_color='#2b2b2b')
 left_frame.grid(row=0, column=0)
@@ -143,7 +105,10 @@ text_image_1.pack(expand = True, padx=20, pady=10)
 label_image_1 = CTkLabel(left_frame, text="")
 label_image_1.pack(expand=True,padx = 20, pady = 20)
 
-button_for_image1 = CTkButton(left_frame, text="Загрузить изображение...", command=lambda: only_one(label_image_1))
+info_label_1 = CTkLabel(left_frame, text="", font=CTkFont(size=20))
+info_label_1.pack(expand=True, padx=20, pady=10)
+
+button_for_image1 = CTkButton(left_frame, text="Загрузить изображение...", command=lambda: only_one(label_image_1, info_label_1))
 button_for_image1.pack(expand=True, padx=20, pady=15)
 
 text_image_2 = CTkLabel(right_frame, text="Второе изображение", font=CTkFont(size=24, weight="bold"))
@@ -152,7 +117,10 @@ text_image_2.pack(expand = True, padx=20, pady=10)
 label_image_2 = CTkLabel(right_frame, text="")
 label_image_2.pack(expand=True,padx = 20, pady = 20)
 
-button_for_image2 = CTkButton(right_frame, text="Загрузить изображение...", command=lambda: only_one(label_image_2))
+info_label_2 = CTkLabel(right_frame, text="", font=CTkFont(size=20))
+info_label_2.pack(expand=True, padx=20, pady=10)
+
+button_for_image2 = CTkButton(right_frame, text="Загрузить изображение...", command=lambda: only_one(label_image_2, info_label_2))
 button_for_image2.pack(expand=True, padx=20, pady=15)
 #--------------------------------------------------------------
 
@@ -184,12 +152,16 @@ def the_face_recognizer():
 
 fp_frame = CTkFrame(app, corner_radius=30, fg_color='#2b2b2b')
 
-label_font = CTkFont(size=28, weight="bold")
+header_fp = CTkLabel(fp_frame, text="Поиск людей", font=CTkFont(size=32, weight="bold"))
+header_fp.grid(row=0,column=0, pady=30)
 
-label = CTkLabel(fp_frame, text='', font=label_font)
+image_frame = CTkFrame(fp_frame, corner_radius=10, fg_color='#2b2b2b')
+image_frame.grid(row=1,column=0)
+
+label = CTkLabel(image_frame, text='', font=CTkFont(size=28, weight="bold"))
 label.pack(expand=True,padx = 20, pady = 20)
 
-button_for_image = CTkButton(fp_frame, text="Загрузить изображение...", command=the_face_recognizer)
+button_for_image = CTkButton(image_frame, text="Загрузить изображение...", command=the_face_recognizer)
 button_for_image.pack(expand=True, padx=20, pady=15)
 #--------------------------------------------------------------
 
@@ -211,6 +183,8 @@ def return_back():
     error_label.configure(text='')
     percentage_ratio.configure(text='')
     label.configure(image='' ,text='')
+    info_label_1.configure(text='')
+    info_label_2.configure(text='')
 
     label_image_1.image_path = None
     label_image_2.image_path = None
