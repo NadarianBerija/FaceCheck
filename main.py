@@ -78,26 +78,26 @@ symbol2 = CTkImage(Image.open("emblems/symbol2.png"), size=(50, 50))
 header_cp = CTkLabel(cp_frame, text="Сравнивание\nдвух личностей", font=CTkFont(size=32, weight="bold"))
 header_cp.grid(row=0,column=1, pady=50)
 
-left_frame = CTkFrame(cp_frame, corner_radius=30, fg_color='#2b2b2b')
-left_frame.grid(row=0, column=0)
+left_frame = CTkFrame(cp_frame, corner_radius=10, fg_color='#2b2b2b')
+left_frame.grid(row=1, column=0)
 
-right_frame = CTkFrame(cp_frame, corner_radius=30, fg_color="#2b2b2b")
-right_frame.grid(row=0, column=2)
+right_frame = CTkFrame(cp_frame, corner_radius=10, fg_color="#2b2b2b")
+right_frame.grid(row=1, column=2)
 
 result_frame=CTkFrame(cp_frame, fg_color="#212121")
-result_frame.grid(row=0,column=1)
+result_frame.grid(row=1,column=1)
 
 symbol_label = CTkLabel(result_frame, image="", text="")
-symbol_label.grid(row=0, column=0)
+symbol_label.grid(row=1, column=0)
 
 percentage_ratio = CTkLabel(result_frame, text="", font=CTkFont(size=24, weight="bold")) 
-percentage_ratio.grid(row=1, column=0)
+percentage_ratio.grid(row=2, column=0)
 
 error_label = CTkLabel(cp_frame, text="")
-error_label.grid(row=2, column=1)
+error_label.grid(row=3, column=1)
 
 button_compare = CTkButton(cp_frame, text="Сравнить", command=lambda: compare_images(label_image_1, label_image_2), width=200, height=50, corner_radius=30, font=CTkFont(size=20, weight="bold"))
-button_compare.grid(row=3, column=1)
+button_compare.grid(row=4, column=1)
 
 text_image_1 = CTkLabel(left_frame, text="Первое изображение", font=CTkFont(size=24, weight="bold"))
 text_image_1.pack(expand = True, padx=20, pady=10)
@@ -150,7 +150,7 @@ def the_face_recognizer():
         label.configure(image=image, text="\nНа изображении нет людей", compound="top")
 
 
-fp_frame = CTkFrame(app, corner_radius=30, fg_color='#2b2b2b')
+fp_frame = CTkFrame(app, corner_radius=30, fg_color='#212121')
 
 header_fp = CTkLabel(fp_frame, text="Поиск людей", font=CTkFont(size=32, weight="bold"))
 header_fp.grid(row=0,column=0, pady=30)
