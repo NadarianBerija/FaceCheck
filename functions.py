@@ -29,6 +29,7 @@ def only_one(target_label, info_lable):
     number_of_person = number_of_people(file_path)
     if number_of_person > 1 or number_of_person <= 0:
         target_label.configure(image='', text="\nНа фото должен быть один человек")
+        info_lable.configure(text='')
         target_label.image_path = None
     else:
         target_label.image_path = file_path
