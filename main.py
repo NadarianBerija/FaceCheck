@@ -3,7 +3,7 @@ from PIL import Image
 from functions import *
 
 app = CTk()
-app.title("faceGPT")
+app.title("FaceCheck")
 app.iconbitmap("emblems/logo.ico")
 app.geometry("1420x980")
 app.configure(fg_color="#212121")
